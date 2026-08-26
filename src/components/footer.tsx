@@ -1,8 +1,16 @@
 // src/components/footer.tsx
+"use client";
 import Link from "next/link";
 import { Flame, Phone, Mail, MapPin } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Admin sayfalarında public Navbar'ı render etmiyoruz
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
   return (
     <footer className="border-t border-slate-800 bg-slate-950 text-slate-400 text-sm">
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">

@@ -67,3 +67,11 @@ model Appointment {
   status      AppointmentStatus @default(BEKLEMEDE)
   createdAt   DateTime          @default(now())
 }
+
+model Notification {
+  id        String   @id @default(cuid())
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

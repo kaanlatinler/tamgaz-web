@@ -22,13 +22,6 @@ export default async function AdminDashboardPage() {
             Tamgaz Mühendislik sistem istatistikleri ve hızlı işlemler.
           </p>
         </div>
-        <div className="flex gap-3">
-          <Button className="bg-emerald-600 hover:bg-emerald-500">
-            <Link href="/admin/urun-ekle" className="flex items-center gap-2">
-              <PlusCircle className="w-4 h-4" /> Yeni Ürün Ekle
-            </Link>
-          </Button>
-        </div>
       </div>
 
       {/* Metrik Kartları */}

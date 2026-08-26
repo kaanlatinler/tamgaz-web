@@ -1,9 +1,17 @@
 // src/components/navbar.tsx
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Flame, Phone } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
+  // Admin sayfalarında public Navbar'ı render etmiyoruz
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-slate-950/90 backdrop-blur">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">

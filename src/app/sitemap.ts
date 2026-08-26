@@ -1,34 +1,45 @@
-// src/app/sitemap.ts
 import { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
 
+// Prisma'dan çekilen alanların tip tanımı
+type ServiceSlug = {
+  slug: string;
+  updatedAt: Date;
+};
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXTAUTH_URL || "https://tamgazmuhendislik.com";
+  const baseUrl = "https://tamgazmuhendislik.com";
 
-  const [products, services] = await Promise.all([
-    prisma.product.findMany({ select: { id: true, createdAt: true } }),
-    prisma.service.findMany({ select: { slug: true, createdAt: true } }),
-  ]);
-
-  const productUrls = products.map((p) => ({
-    url: `${baseUrl}/urunler/${p.id}`,
-    lastModified: p.createdAt,
-  }));
+  // Tip tanımını ServiceSlug[] olarak açıkça belirtiyoruz
+  let services: ServiceSlug[] = [];
+  try {
+    services = await prisma.service.findMany({ select: { slug: true, updatedAt: true } });
+  } catch (e) {
+    console.error("Sitemap hizmetler çekilemedi:", e);
+  }
 
   const serviceUrls = services.map((s) => ({
     url: `${baseUrl}/hizmetler/${s.slug}`,
-    lastModified: s.createdAt,
+    lastModified: s.updatedAt,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
   }));
 
-  return [
-    { url: baseUrl, lastModified: new Date() },
-    { url: `${baseUrl}/hakkimizda`, lastModified: new Date() },
-    { url: `${baseUrl}/hizmetler`, lastModified: new Date() },
-    { url: `${baseUrl}/urunler`, lastModified: new Date() },
-    { url: `${baseUrl}/projeler`, lastModified: new Date() },
-    { url: `${baseUrl}/randevu`, lastModified: new Date() },
-    { url: `${baseUrl}/iletisim`, lastModified: new Date() },
-    ...productUrls,
-    ...serviceUrls,
-  ];
+  // Sabit Sayfalar
+  const routes = [
+    "",
+    "/hakkimizda",
+    "/hizmetler",
+    "/urunler",
+    "/projeler",
+    "/randevu",
+    "/iletisim",
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: "daily" as const,
+    priority: route === "" ? 1.0 : 0.8,
+  }));
+
+  return [...routes, ...serviceUrls];
 }

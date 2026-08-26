@@ -15,6 +15,7 @@ import {
   Settings,
   Clock,
 } from "lucide-react";
+import JsonLd from "@/components/json-ld";
 
 export default async function HomePage() {
   // Veritabanından öne çıkan projeleri ve ürünleri çekiyoruz
@@ -31,6 +32,7 @@ export default async function HomePage() {
 
   return (
     <div className="bg-slate-950 text-white min-h-screen">
+      <JsonLd/>
       {/* --- HERO SECTION (ATEŞ & BUZ KONSEPTİ) --- */}
       <section className="relative min-h-[85vh] flex flex-col justify-center px-6 py-16 overflow-hidden border-b border-slate-800">
         {/* Arka Plan Glow Efektleri */}

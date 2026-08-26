@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛠️ Tamgaz Mühendislik — Web Platformu & Yönetim Paneli
 
-## Getting Started
+Tamgaz Mühendislik için geliştirilmiş; kurumsal web sitesi, tam yetkili yönetim paneli (CMS), anlık Telegram & panel içi randevu bildirimi sistemleri ve dinamik SEO altyapısına sahip modern web uygulaması.
 
-First, run the development server:
+---
+
+## 🚀 Öne Çıkan Özellikler
+
+- **Kurumsal Web Arayüzü:** Doğalgaz tesisatı, kombi montajı, proje çizimi ve mühendislik çözümlerini sergileyen responsive (mobil uyumlu) dark-mode tasarım.
+- **Ücretsiz Keşif & Randevu Formu:** Müşterilerin anlık keşif talebi oluşturabileceği interaktif form yapısı.
+- **Anlık Bildirim Sistemleri:**
+  - 📱 **Telegram Botu Entegrasyonu:** Form gönderildiği anda yöneticinin Telegram hesabına/grubuna sesli anlık detay bildirimi düşer.
+  - 🔔 **Panel İçi Zil & Toast Uyarısı:** Admin panelde çalışan yöneticilere canlı pop-up ve zil uyarısı.
+- **Yönetim Paneli (Admin CMS):**
+  - **Keşif & Randevular:** Gelen talepleri listeleme, detay modalı ile müşteri adresi/notunu inceleme, durum güncelleme (Onaylandı/İptal).
+  - **Ürün Kataloğu & Hizmet Yönetimi:** Ürün ve hizmetlerin dinamik CRUD (Ekle, Oku, Güncelle, Sil) işlemleri.
+  - **Referans Projeler:** Saha fotoğrafları ve konum bilgileriyle proje portföy yönetimi.
+  - **Yöneticiler:** Bcrypt şifreleme destekli admin hesap yönetimi.
+- **Tam SEO & Google Yapılandırması:**
+  - Dinamik `sitemap.xml` ve `robots.txt` oluşturucu.
+  - Google Haritalar & İşletme görünürlüğü için **JSON-LD (HVAC Business)** şeması.
+  - Sosyal medya paylaşımları için **Open Graph** ve Twitter kartları.
+
+---
+
+## 🛠️ Teknolojik Mimari
+
+- **Framework:** Next.js 14+ (App Router, React 18)
+- **Dil:** TypeScript
+- **Stil:** Tailwind CSS, Shadcn UI, Lucide Icons
+- **Veritabanı & ORM:** PostgreSQL, Prisma ORM
+- **Kimlik Doğrulama & Güvenlik:** Bcrypt.js, HTTP-Only Cookies
+- **Bildirim & Entegrasyon:** Telegram Bot API, Sonner (Toast)
+- **Performans:** NextTopLoader
+
+---
+
+## 🏁 Yerel Kurulum (Getting Started)
+
+Projeyi kendi bilgisayarınızda çalıştırmak için aşağıdaki adımları sırasıyla uygulayın.
+
+### 1. Depoyu Klonlayın
+
+```bash
+git clone [https://github.com/kullanici-adi/tamgaz-web.git](https://github.com/kullanici-adi/tamgaz-web.git)
+cd tamgaz-web
+```
+
+### 2. Bağımlılıkları Yükleyin
+
+```bash
+npm install
+```
+
+### 3. Ortam Değişkenlerini (.env) Oluşturun
+
+Ana dizinde .env dosyası oluşturun ve aşağıdaki değişkenleri tanımlayın:
+
+# Veritabanı Bağlantısı (PostgreSQL)
+
+DATABASE_URL="postgresql://kullanici:sifre@localhost:5432/tamgaz_db?schema=public"
+
+# Telegram Bot Bildirim Bilgileri
+
+TELEGRAM_BOT_TOKEN="bot_token_buraya"
+TELEGRAM_CHAT_ID="chat_id_buraya"
+
+### 4. Veritabanı Şemasını Senkronize Edin
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+### 5. Geliştirme Sunucusunu Başlatın
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Uygulama http://localhost:3000 adresinde çalışmaya başlayacaktır.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📁 Proje Klasör Yapısı
+Plaintext
+src/
+├── app/
+│ ├── admin/ # Admin paneli sayfaları ve layout
+│ ├── api/ # API rotaları (appointments, notifications, auth vb.)
+│ ├── loading.tsx # Animasyonlu global yükleme bileşeni
+│ ├── robots.ts # Arama motoru tarama kuralları
+│ ├── sitemap.ts # Dinamik sitemap oluşturucu
+│ └── layout.tsx # Root layout ve global SEO metadata
+├── components/ # UI bileşenleri ve JSON-LD şeması
+└── lib/ # Prisma ve Telegram yardımcı servisleri
+🔒 Lisans & Gizlilik
+Bu proje Tamgaz Mühendislik için özel olarak geliştirilmiştir. İzin alınmadan kopyalanamaz, çoğaltılamaz veya üçüncü şahıslarla paylaşılamaz.
